@@ -30,7 +30,6 @@ get_data=async()=>{
     try{
         const res=await fetch("https://5fca0d103c1c2200164419d0.mockapi.io/products/items")
         this.network_status=res.status
-        
         const data=await res.json()
         this.users_data=data
         this.network_status=false
@@ -41,6 +40,16 @@ get_data=async()=>{
     
 }
 hitSignIn=async(u_data)=>{
+    // if(123==u_data.user_name && 123==u_data.password){
+    //     this.network_status=false
+    //     this.status=true;
+        // this.user_profile=user;
+        // this.current_user={First_Name:"veera",Last_Name:"Kandula",Email:"123@gmail.com",Password:"123",User_Name:"123",Gender:"Male",id:21};
+        // this.current_user_id=user.id;
+        // this.cart_products=user.Cart_Details.Cart_List;
+    //     this.cart_products=[]
+    //     return
+    // }
     await this.get_data()
     if(!this.network_status){
     let user_history=this.users_data
@@ -148,7 +157,7 @@ let all_Items=this.items_data;
            {
                  Cart_Items[j].quantity+=1;
                  Cart_Items[j].total_price=parseFloat(Cart_Items[j].quantity*all_Items[i].price).toFixed(2)
-                // this.current_user.Cart_Details.Cart_List=Cart_Items
+                this.current_user.Cart_Details.Cart_List=Cart_Items
                 let data={Cart_Details:{No_Of_Cart_Items:Cart_Items.length,Cart_List:Cart_Items}}
             //    alert(data.First_Name)
               await this.cart_updation(this.current_user_id,data)
@@ -168,7 +177,7 @@ let all_Items=this.items_data;
            item['total_price']=parseFloat(item.price)
            item['price']=item.price
            Cart_Items.push(item)
-            // this.cart_products=Cart_Items
+            this.cart_products=Cart_Items
             let data={Cart_Details:{No_Of_Cart_Items:Cart_Items.length,Cart_List:Cart_Items}}
         
       await this.cart_updation(this.current_user_id,data)
@@ -190,8 +199,8 @@ Cart_Items.forEach(async item=>{
 
     }
 })
-// this.cart_products=Cart_Item
-// return Cart_Item
+// this.cart_products=Cart_Items
+// return Cart_Items
 }
 inc_quantity=async (item_id)=>{
 let Cart_Items=this.cart_products;
@@ -232,6 +241,7 @@ dec_quantity=async(item_id)=>{
 let data={Cart_Details:{No_Of_Cart_Items:Cart_Items.length,Cart_List:Cart_Items}}
 await this.cart_updation(this.current_user_id,data)
 this.cart_products=this.current_user.Cart_Details.Cart_List
+// this.cart_products=Cart_Items
     }
 hitLogout=async()=>{
     await this.get_data()

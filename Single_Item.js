@@ -8,6 +8,7 @@ import Ratting from "./ratting";
 import Icon from 'react-native-vector-icons/Ionicons';
 // import Carousel from 'react-native-snap-carousel'
 import Size_chart from "./Size_chart";
+import Cart_Icon from "./cart_Icon";
 class Signle_Item_page extends React.Component{
     state={
         actual_item:null,
@@ -18,22 +19,35 @@ class Signle_Item_page extends React.Component{
             id:null,
             selected_page:true,
             cart_items_count:0,
-            added_id:null
+            added_id:null,
+            privious_items:[]
     }
 
     componentDidMount(){
-        this._unsubscribe =this.props.navigation.addListener('focus', () => {
             this.get_Item()
-          });
+            this._unsubscribe=this.props.navigation.addListener('focus',()=>{
+                this.set_length()
+            });
     
+            
     }
-    componentWillUnmount() {
-        this._unsubscribe();
-      }
-    get_Item=()=>{
-        const{actual_item,Items_List,cart_items_count}=this.state
+    
+    componentWillUnmount(){
+        this.set_length()
+    }
+    set_length=()=>{
         const{cart_products}=newAppStore
-        this.setState({cart_items_count:cart_products.length,actual_item:newAppStore.Selected_item,Items_List:newAppStore.remain_data})
+        this.setState({cart_items_count:cart_products.length})
+
+    }
+      
+    get_Item=()=>{
+        const{actual_item,Items_List,cart_items_count,privious_items}=this.state
+        let array=privious_items
+        array.push(newAppStore.Selected_item)
+        const{cart_products}=newAppStore
+        this.setState({privious_items:array,cart_items_count:cart_products.length,actual_item:newAppStore.Selected_item,Items_List:newAppStore.remain_data})
+        
     }
     goToItemPage=async(e)=>{
         const{cart_products}=newAppStore
@@ -67,15 +81,14 @@ render(){
         }
     }
     let remaing=(ratting_count%count)
+    
     return(
     <View>
          
 
-        <Text style={{position:"absolute",bottom:35,right:40,zIndex:2,color:"goldenrod"}}>{cart_items_count}</Text>    
-        <TouchableOpacity onPress={this.cartClicked}
-         style={{display:"flex",justifyContent:"center",alignItems:"center",position:"absolute",bottom:10,right:15,zIndex:1,width:60,height:60,borderWidth:1,backgroundColor:"rgb(3, 15, 66)",borderRadius:50}}>
-            <Icon name="cart-outline" size={45} color="goldenrod"/>
-        </TouchableOpacity>
+       <View  style={{position:"absolute",bottom:5,right:8,zIndex:2,color:"goldenrod",borderWidth:1}}> 
+        <Cart_Icon cart_clicked={this.cartClicked} cart_count={cart_items_count}/>
+        </View>
         <ScrollView>
         
     <View> 
