@@ -1,8 +1,10 @@
+import AsyncStorage from "@react-native-community/async-storage"
 class NewAppStore{
 cart_products=[]
 current_user=null
 current_user_id=null;
 Selected_item=null;
+tocken=null;
 items_data=[
     {
     "availableSizes":["S","L","XL","XXL"],
@@ -20,14 +22,24 @@ items_data=[
     {
     "availableSizes":["S","L","XL","XXL"],"currencyFormat":"₹","currencyId":"USD","description":"14/15 s/nº","id":1,"installments":9,"isFreeShipping":true,"price":800.24,"sku":18644119330491310,"style":"Preta com listras brancas","title":"Sphynx Tie Dye Grey T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/11854078013954528_1.7faf6a31.jpg"},{"availableSizes":["XS","L"],"currencyFormat":"₹","currencyId":"USD","description":"14/15 s/nº","id":2,"installments":7,"isFreeShipping":true,"price":1147,"sku":11854078013954528,"style":"Branco com listras pretas","title":"Danger Knife Grey","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/876661122392077_1.df97d7c2.jpg"},{"availableSizes":["XXL","L"],"currencyFormat":"₹","currencyId":"USD","description":"2014 s/nº","id":3,"installments":7,"isFreeShipping":false,"price":1147,"sku":876661122392077,"style":"Preto com listras brancas","title":"White DGK Script Tee","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/9197907543445676_1.59b64365.jpg"},{"availableSizes":["XL"],"currencyFormat":"₹","currencyId":"USD","description":"14/15 s/nº - Jogador","id":4,"installments":12,"isFreeShipping":false,"price":1993.99,"sku":9197907543445676,"style":"Branco com listras pretas","title":"Born On The Streets","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/10547961582846888_1.54fbf816.jpg"},{"availableSizes":["M","L","XL"],"currencyFormat":"₹","currencyId":"USD","description":"14/15 + Camiseta 1º Mundial","id":5,"installments":9,"isFreeShipping":false,"price":845.24,"sku":10547961582846888,"style":"Preto","title":"Tso 3D Short Sleeve T-Shirt A","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/6090484789343891_1.45a051e0.jpg"},{"availableSizes":["XL","XXL"],"currencyFormat":"₹","currencyId":"USD","description":"Goleiro 13/14","id":6,"installments":0,"isFreeShipping":true,"price":3841.99,"sku":6090484789343891,"style":"Branco","title":"Crazy Monkey Black T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/18532669286405344_1.d78e2790.jpg"},{"availableSizes":["S"],"currencyFormat":"₹","currencyId":"USD","description":"1977 Infantil","id":7,"installments":4,"isFreeShipping":true,"price":1732.05,"sku":18532669286405344,"style":"Preto com listras brancas","title":"Man Tie Dye Cinza Grey T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/27250082398145996_1.4c799bac.jpg"},{"availableSizes":["XL"],"currencyFormat":"₹","currencyId":"USD","description":"","id":8,"installments":4,"isFreeShipping":false,"price":1439.5,"sku":5619496040738316,"style":"Azul escuro","title":"Crazy Monkey Grey","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/11600983276356164_1.06ec2c62.jpg"},{"availableSizes":["L","XL"],"currencyFormat":"₹","currencyId":"USD","description":"","id":9,"installments":5,"isFreeShipping":true,"price":1038.6,"sku":11600983276356164,"style":"","title":"Tso 3D Black T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/27250082398145996_1.4c799bac.jpg"},{"availableSizes":["L","XL"],"currencyFormat":"₹","currencyId":"USD","description":"","id":10,"installments":9,"isFreeShipping":true,"price":3772,"sku":27250082398145996,"style":"","title":"On The Streets Black T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/5619496040738316_1.843a4713.jpg"},{"availableSizes":["M","L"],"currencyFormat":"₹","currencyId":"USD","description":"","id":11,"installments":3,"isFreeShipping":true,"price":1019.98,"sku":39876704341265610,"style":"Wine","title":"Wine Skul T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/39876704341265610_1.a313534c.jpg"},{"availableSizes":["S","XS"],"currencyFormat":"₹","currencyId":"USD","description":"4 MSL","id":12,"installments":9,"isFreeShipping":true,"price":845.24,"sku":12064273040195392,"style":"Black with custom print","title":"Cat Tee Black T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/12064273040195392_1.2995d79a.jpg"},{"availableSizes":["M"],"currencyFormat":"₹","currencyId":"USD","description":"","id":13,"installments":5,"isFreeShipping":true,"price":2267.06,"sku":51498472915966370,"style":"Front print and paisley print","title":"Dark Thug Blue-Navy T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/51498472915966370_1.df947f14.jpg"},{"availableSizes":["M","L","XL"],"currencyFormat":"₹","currencyId":"USD","description":"GPX Poly 1","id":14,"installments":3,"isFreeShipping":true,"price":692.82,"sku":10686354557628304,"style":"Front tie dye print","title":"Sphynx Tie Dye Wine T-Shirt","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/10686354557628304_1.0d941b4c.jpg"},{"availableSizes":["M","L","XL","XXL"],"currencyFormat":"₹","currencyId":"USD","description":"Treino 2014","id":15,"installments":5,"isFreeShipping":true,"price":1077.72,"sku":11033926921508488,"style":"Black T-Shirt with front print","title":"Skuul","image":"https://react-shopping-cart-67954.firebaseapp.com/static/media/11033926921508488_1.84c82a5a.jpg"}]
 users_data=[];
+out_count=0;
 status=false;
 status1=false;
 user_entry_status=false;
 user_profile=null;
 remain_data=[]
 network_status=null
+getOut=()=>{
+    let count=this.out_count
+    count++
+    this.out_count=count;
+}
+getIn=()=>{
+    this.out_count=0
+}
 get_data=async()=>{
     try{
+        
         const res=await fetch("https://5fca0d103c1c2200164419d0.mockapi.io/products/items")
         this.network_status=res.status
         const data=await res.json()
@@ -53,8 +65,76 @@ hitSignIn=async(u_data)=>{
     await this.get_data()
     if(!this.network_status){
     let user_history=this.users_data
-    user_history.forEach(user=>{
+    user_history.forEach (async  user =>{
         if(user.User_Name===u_data.user_name && user.Password===u_data.password)
+        {
+            this.status=true;
+            await AsyncStorage.setItem("user",user.id)
+       
+            // await this.setData()
+            this.network_status=false
+            //   this.status=true;
+            //   this.user_profile=user;
+            //   this.current_user=user;
+            //   this.current_user_id=user.id;
+            //   this.cart_products=user.Cart_Details.Cart_List;
+            //   const data={Online_Status:true}
+            //   await this.setStatus(user.id,data);
+        }
+    })
+    }
+}
+setData=async()=>{
+    console.log("setting")
+    await this.get_data()
+    let id=await AsyncStorage.getItem("user")
+    
+//     alert(id)
+    if(!this.network_status){
+  
+    this.users_data.forEach(async user=>{
+        if(user.id==id)
+        {
+            
+            this.network_status=false
+            
+            this.user_profile=user;
+            this.current_user=user;
+            this.current_user_id=user.id;
+            this.cart_products=user.Cart_Details.Cart_List;
+            const data={Online_Status:true}
+            await this.setStatus(user.id,data);
+        }
+    })
+}
+  
+}
+addFriend=async(notifications,user,id)=>{
+// let user_info={Name:this.current_user.First_Name+" "+this.current_user.Last_Name,Friends:this.current_user.Friends,Id:this.current_user.id}
+// let notifications_data=[...this.current_user.Notifications]
+// notifications_data.push(user_info)
+const data={Notifications:notifications}
+const headers=new Headers();
+    headers.append("Content-type","Application/json");
+    const options={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data)
+    }
+    const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
+    const response=await fetch(request)
+    const data1={Send_Notifications:user}
+    const options1={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data1)
+    }
+    const request1=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+this.current_user_id,options1);
+    const response1=await fetch(request1)
+    await this.get_data()
+    let user_history=this.users_data
+    user_history.forEach(user=>{
+        if(user.id==this.current_user_id)
         {
             this.network_status=false
               this.status=true;
@@ -64,9 +144,181 @@ hitSignIn=async(u_data)=>{
               this.cart_products=user.Cart_Details.Cart_List;
         }
     })
+   
+}
+removeRequest=async(user_send_notifications,id,prev_user_notifications,id1)=>{
+    const data={Send_Notifications:user_send_notifications}
+    const headers=new Headers();
+    headers.append("Content-type","Application/json");
+    const options={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data)
     }
+    const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
+    const response=await fetch(request)
+    
+    const data1={Notifications:prev_user_notifications}
+    const options1={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data1)
+    }
+    const request1=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id1,options1);
+    const response1=await fetch(request1)
+    await this.get_data()
+    let user_history=this.users_data
+    user_history.forEach(user=>{
+        if(user.id==this.current_user_id)
+        {
+            this.network_status=false
+              this.status=true;
+              this.user_profile=user;
+              this.current_user=user;
+              this.current_user_id=user.id;
+              this.cart_products=user.Cart_Details.Cart_List;
+        }
+    })
 }
 
+removeData=async(user_notifications,user_send_notifications,id,prev_user_notifications,prev_user_send_notifications,id1)=>{
+    const data={Notifications:user_notifications,Send_Notifications:user_send_notifications}
+    const headers=new Headers();
+    headers.append("Content-type","Application/json");
+    const options={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data)
+    }
+    const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
+    const response=await fetch(request)
+    
+    const data1={Notifications:prev_user_notifications,Send_Notifications:prev_user_send_notifications}
+    const options1={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data1)
+    }
+    const request1=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id1,options1);
+    const response1=await fetch(request1)
+    await this.get_data()
+    let user_history=this.users_data
+    user_history.forEach(user=>{
+        if(user.id==this.current_user_id)
+        {
+            this.network_status=false
+              this.status=true;
+              this.user_profile=user;
+              this.current_user=user;
+              this.current_user_id=user.id;
+              this.cart_products=user.Cart_Details.Cart_List;
+        }
+    })
+}
+removeFriend=async(user_friends,id,prev_user_friends,id1)=>{
+    const data={Friends:user_friends}
+    const headers=new Headers();
+    headers.append("Content-type","Application/json");
+    const options={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data)
+    }
+    const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
+    const response=await fetch(request)
+    
+    const data1={Friends:prev_user_friends}
+    const options1={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data1)
+    }
+    const request1=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id1,options1);
+    const response1=await fetch(request1)
+    await this.get_data()
+    let user_history=this.users_data
+    user_history.forEach(user=>{
+        if(user.id==this.current_user_id)
+        {
+            this.network_status=false
+              this.status=true;
+              this.user_profile=user;
+              this.current_user=user;
+              this.current_user_id=user.id;
+              this.cart_products=user.Cart_Details.Cart_List;
+        }
+    })
+}
+
+addFriendData=async(user_notifications,user_send_notifications,user_friends,id,prev_user_notifications,prev_user_send_notifications,prev_user_friends,id1)=>{
+    const data={Notifications:user_notifications,Send_Notifications:user_send_notifications,Friends:user_friends}
+    const headers=new Headers();
+    headers.append("Content-type","Application/json");
+    const options={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data)
+    }
+    const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
+    const response=await fetch(request)
+    
+    const data1={Notifications:prev_user_notifications,Send_Notifications:prev_user_send_notifications,Friends:prev_user_friends}
+    const options1={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data1)
+    }
+    const request1=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id1,options1);
+    const response1=await fetch(request1)
+    await this.get_data()
+    let user_history=this.users_data
+    user_history.forEach(user=>{
+        if(user.id==this.current_user_id)
+        {
+            this.network_status=false
+              this.status=true;
+              this.user_profile=user;
+              this.current_user=user;
+              this.current_user_id=user.id;
+              this.cart_products=user.Cart_Details.Cart_List;
+        }
+    })
+}
+setStatus=async(id,data)=>{
+    const headers=new Headers();
+    headers.append("Content-type","Application/json");
+    const options={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data)
+    }
+    const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
+    const response=await fetch(request)
+}
+profileUpdate=async(info,id)=>{
+    const headers=new Headers();
+    headers.append("Content-type","Application/json");
+    const options={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(info)
+    }
+    const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
+    const response=await fetch(request)
+    await this.get_data()
+    let user_history=this.users_data
+    user_history.forEach(user=>{
+        if(user.id==id)
+        {
+            this.network_status=false
+              this.status=true;
+              this.user_profile=user;
+              this.current_user=user;
+              this.current_user_id=user.id;
+              this.cart_products=user.Cart_Details.Cart_List;
+        }
+    })
+}
 hitSignUp=async(u_data)=>{
     await this.get_data()
     let user_history=this.users_data
@@ -106,12 +358,28 @@ cart_updation=async(id,data)=>{
     }
     const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
     const response=await fetch(request)
-    
-    
 }
+profile_updation=async(data,id)=>{
+    const headers=new Headers();
+    headers.append("Content-type","Application/json");
+    const options={
+        method:"PUT",
+        headers,
+        body:JSON.stringify(data)
+    }
+    const request=new Request("https://5fca0d103c1c2200164419d0.mockapi.io/products/items/"+id,options);
+    const response=await fetch(request)
+    await this.get_data()
+    let user_history=this.users_data
+    user_history.forEach(user=>{
+       if(user.id==id)
+       {
+             this.current_user=user
+            
+       }
+   })
 
-
-
+}
 
 inc_Dec=(data)=>{
     if(data.length!==0){
@@ -246,11 +514,17 @@ this.cart_products=this.current_user.Cart_Details.Cart_List
 hitLogout=async()=>{
     await this.get_data()
     if(!this.network_status){
+    await AsyncStorage.clear()
+    const id=this.current_user_id
     this.network_status=false
     this.status=false;
+    this.tocken=null;
     this.current_user=null
     this.current_user_id=null;
     this.cart_products=[]
+    const data={Online_Status:false}
+    
+    await this.setStatus(id,data);
     }
     
 }

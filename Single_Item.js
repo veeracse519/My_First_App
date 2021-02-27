@@ -86,7 +86,7 @@ render(){
     <View>
          
 
-       <View  style={{position:"absolute",bottom:5,right:8,zIndex:2,color:"goldenrod",borderWidth:1}}> 
+       <View  style={{position:"absolute",bottom:5,right:8,zIndex:2,color:"goldenrod"}}> 
         <Cart_Icon cart_clicked={this.cartClicked} cart_count={cart_items_count}/>
         </View>
         <ScrollView>

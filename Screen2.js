@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, TextInput,ScrollView,Button,Image } from "react-native";
 import newAppStore from "./newStore";
-import ImagePicker from 'react-native-image-crop-picker';
-// import ImagePicker from "react-native-customized-image-picker";
+// import ImagePicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from "react-native-gesture-handler";
 //import { green100 } from "react-native-paper/lib/typescript/styles/colors";
@@ -79,7 +78,11 @@ imageIS="https://afmnoco.com/wp-content/uploads/2019/07/74046195_s.jpg"
     const data={url:imageIS,First_Name:first_name,Last_Name:last_name,Gender:gender,User_Name:user_name,Email:email,Password:password,Cart_Details:{
        No_Of_Cart_Items:0,
        Cart_List:[]
-     }}
+     },
+     Friends:[],
+     Online_Status:false,
+     Notifications:[]
+    }
      let status_code=await hitSignUp(data)
      if(status_code===201){
 
@@ -148,28 +151,7 @@ imageIS="https://afmnoco.com/wp-content/uploads/2019/07/74046195_s.jpg"
       await this.setState({re_pass_reg:null})
     }
   }
-  // handleImage=async()=>{
-  //   const{imageUri,imageState}=this.state
-  //   let image=await ImagePicker.openPicker({cropping:true})
-  //   const data=new FormData()
-  //       data.append('file',image[0].path)
-  //       data.append('upload_preset','veera_images')
-  //       const res= await fetch("https://api.cloudinary.com/v1_1/veera/image/upload",{
-  //           method:"POST",
-  //           body:data
-  //       })
-  //       const file= await res.json()
-  //       const imageURL=file.secure_url;
-  //   this.setState({imageUri:image[0].path,imageState:true})
-    // ImagePicker.openPicker({
-    //   cropping: true
-    // }).then(image => {
-    //   this.setState({imageUri:image,imageState:true})
-    // }).catch(e=>{
-    //   alert("file error")
-    // })
-    
-  // }
+  
   onChangeEmail=async(text)=>{
     await this.setState({email:text})
     let str=text;

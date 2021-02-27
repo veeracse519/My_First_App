@@ -10,9 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/drawer": "^5.11.4",
     "@react-navigation/material-bottom-tabs": "^5.3.10",
+    "@react-navigation/material-top-tabs": "^5.3.13",
     "@react-navigation/native": "^5.8.10",
     "@react-navigation/stack": "^5.12.8",
     "@types/react-native-snap-carousel": "^3.8.2",
@@ -20,12 +22,13 @@
     "react-native": "0.63.4",
     "react-native-customized-image-picker": "^1.1.0",
     "react-native-elements": "^3.1.0",
+    "react-native-encrypted-storage": "^4.0.2",
     "react-native-gesture-handler": "^1.9.0",
-    "react-native-image-crop-picker": "^0.35.2",
     "react-native-paper": "^4.5.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.16.1",
+    "react-native-tab-view": "^2.15.2",
     "react-native-vector-icons": "^7.1.0",
     "react-navigation": "^4.4.3",
     "react-navigation-stack": "^2.10.2"

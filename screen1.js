@@ -1,12 +1,28 @@
 import React from "react"
-import {View,Text,Button,TextInput,StyleSheet,ScrollView} from "react-native"
+import EncryptedStorage from"react-native-encrypted-storage"
+import {View,Text,Button,TextInput,StyleSheet,ScrollView,BackHandler,Alert} from "react-native"
+import AsyncStorage from "@react-native-community/async-storage"
+// import {AndroidBackHandler} from ""
 // import {AsyncStorage} from "@react-native-community/async-storage"
 import newAppStore from "./newStore"
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity } from "react-native";
-
+import {  StackActions } from '@react-navigation/native';
+// import {NavigationActions, StackActions} from 'react-navigation';
 class App extends React.Component{
+  count=0;
+  backHandler;
+   
+ 
+     count=0
+    
+  
+    // componentDidMount() {
+    //    this.getTocken()    
+    // }
+  
+  
     style=StyleSheet.create({
      container:{
       display:"flex",
@@ -14,7 +30,6 @@ class App extends React.Component{
       flexDirection:"column",
       justifyContent:"center",
       alignItems:"center",
-
      },
      box:{
       borderRadius:10,
@@ -51,7 +66,11 @@ class App extends React.Component{
        pass:"",
        pass_status:true,
        show:true,
-       sign_status:false
+       sign_status:false,
+       user:null,
+       tocken:null,
+       loading:true,
+       newtwork_error:false
    }
    
    onPasswordShow=async()=>{
@@ -74,10 +93,16 @@ class App extends React.Component{
       }
       else{
         if(status){
+          
+       
+          //  let user_session=await EncryptedStorage.getItem("user_session")
           // await AsyncStorage.setItem("tocken",JSON.stringify(newAppStore.current_user))
+          // await newAppStore.setData()
           await this.setState({text:"",pass:"",show:true,network_status:false,enter_vals:false,sorry:false,sign_status:false})
+          
+          // await this.getTocken()
           const {navigation}=this.props
-         navigation.navigate('Account')
+         navigation.navigate('Load')
         }
         else{
           await this.setState({show:true,network_status:false,enter_vals:false,sorry:true,sign_status:false})
@@ -105,16 +130,31 @@ class App extends React.Component{
        navigation.navigate('Profile')
      }
    }
-    render(){
-  const{network_status,sorry,enter_vals,sign_status}=this.state
-//    let user_info=AsyncStorage.getItem("tocken")
-//    let user=JSON.parse(user_info)
-//    if(user.User_Name)
-//    {
-//  alert(user.User_Name)
-//  return
-//    }
-
+//    getTocken=async ()=>{
+   
+//     const{user,loading}=this.state
+//     await this.setState({loading:true})
+//      let Tocken= await AsyncStorage.getItem("user")
+//      if(Tocken!=null){
+//     await newAppStore.setData()
+//     let network_status=await newAppStore.network_status
+//     console.log(network_status)
+//        if(network_status){
+//    await this.setState({loading:false,newtwork_error:true})     
+//       }
+//       else{
+//       await this.setState({newtwork_error:false})
+//       const{navigation}=this.props
+//       navigation.navigate("Account")
+//       return
+//       }
+//     }
+//     await this.setState({loading:false})
+  
+// }
+   render(){
+     
+  const{network_status,newtwork_error,sorry,enter_vals,sign_status,tocken,loading}=this.state
         return (
             
             <View style={this.style.container}>
@@ -161,8 +201,8 @@ class App extends React.Component{
        <Text style={{color:"rgb(219, 20, 40)",borderBottomWidth:1}}>Register for an account?</Text>
      </TouchableOpacity>
               </View>
+           
             </View>
-            
 
           )
     }  

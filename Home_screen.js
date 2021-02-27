@@ -4,6 +4,9 @@ import { TouchableOpacity } from "react-native";
 
 import {View,Text,StyleSheet,TextInput,Image,ScrollView,Button,BackHandler} from "react-native"
 import Icon from 'react-native-vector-icons/Ionicons';
+import Content from "./drawer";
+import Home from "./Home";
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import newAppStore from "./newStore";
 class HomeScreen extends React.Component{
     state={
@@ -14,14 +17,21 @@ class HomeScreen extends React.Component{
         id:null,
         added_id:null,
         selected_page:true,
+        loading:true
     }
     count=100
     componentDidMount(){
+        // this.backHandler=BackHandler.addEventListener("hardwareBackPress",this.backOption)
         this.getData()
     }
+    // backOption=()=>{
+    //     alert(1)
+    // }
     getData=async()=>{
         const {items_data}=newAppStore
-  await this.setState({Items_List:items_data})
+        // await newAppStore.setData()
+
+  await this.setState({Items_List:items_data,loading:false})
     }
     single_item_Select=async(item_id)=>{
        await newAppStore.selected_item(item_id)
@@ -42,7 +52,7 @@ class HomeScreen extends React.Component{
        
         main:{
             backgroundColor:'rgb(242, 253, 255)',
-                        
+            marginBottom:105
           
         }
     })
@@ -70,14 +80,14 @@ class HomeScreen extends React.Component{
     }
 render(){
     
-    const {Items_List,id,selected_Size,added_id,select_size,Items_Another_List}=this.state
+    const {Items_List,id,selected_Size,added_id,select_size,Items_Another_List,loading}=this.state
    
     return(
-        <View style={this.styles.main}>  
-       
-         <ScrollView >
-      <View> 
-     <View style={this.styles.search}>
+        
+        <View style={this.styles.main}>
+            <View style={this.styles.search}>
+     
+            <Icon name="ellipsis-vertical" size={30} onPress={() => this.props.navigation.openDrawer()} />
      <Icon name="search-outline" size={25}/>
       <TextInput
   placeholder="Search Any Thing Here..."
@@ -89,7 +99,8 @@ render(){
   }
    />
     </View>
-    <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",marginTop:10}}>
+
+    <View style={{display:"flex",flexDirection:"row",justifyContent:"space-around",marginTop:10,marginBottom:10}}>
     <TouchableOpacity style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",backgroundColor:"white",height:25,width:50,borderRadius:5}}
     onPress={this.inc_Dec}
     >
@@ -100,7 +111,11 @@ render(){
         >
         <Text style={{fontWeight:"bold",fontSize:20}}>Z<Icon name="arrow-forward" size={20}/>A</Text>
         </TouchableOpacity>
-    </View>
+    </View>        
+        {/* {loading?<Text>Loading..</Text>: */}
+        <ScrollView >
+      <View style={{borderBottom:10}}> 
+     
   {Items_List.length!=0?<View style={{display:"flex",flexDirection:"row",flexWrap:'wrap',justifyContent:"space-around",marginTop:10}}>
        {
        Items_List.map(item=>(
@@ -146,11 +161,12 @@ render(){
         </View>
    
     </ScrollView>
+    
     </View>
 )
     
 }
 
 }
-
+const Drawer=createDrawerNavigator()
 export default HomeScreen

@@ -54,7 +54,7 @@ render(){
             <Text>CHECKOUT</Text>
         </TouchableOpacity>
         </View>:<View >
-            <Text style={{fontSize:30,color:"white",fontWeight:"bold",textAlign:"center"}}>No Items Found In Cart...</Text>
+            <Text style={{fontSize:30,color:"black",fontWeight:"bold",textAlign:"center"}}>No Items Found In Cart...</Text>
         </View>}
 <View style={{flex:0.93}}>       
      <ScrollView >

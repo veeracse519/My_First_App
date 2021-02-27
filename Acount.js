@@ -11,15 +11,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 //  import Icon from 'react-native-vector-icons/MaterialIcons';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Content from "./drawer";
+import TopTab from "./toptab";
+import EncryptedStorage from "react-native-encrypted-storage";
 
 class Account_page extends React.Component{
     
 
 //    componentDidMount(){
-//      BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-//     // this.getData()
-
+//     const{Id}=this.props
+//     alert(Id)
+//     this.getUser_info(Id)
 //    }
+// getUser_info=async(id)=>{
+// await newAppStore.setData(id)
+// }
 //    getData=()=>{
 //        alert(1)
 //    }
@@ -35,46 +41,49 @@ class Account_page extends React.Component{
     componentDidMount(){
         this._unsubscribe =this.props.navigation.addListener('focus', () => {
             this.cartList()
+            
           });
     
     }
     componentWillUnmount() {
         this._unsubscribe();
       }
-    cartList=()=>{
-        this.setState({cart_count:newAppStore.cart_products.length})
+      
+    cartList=async()=>{
+    // await newAppStore.setData()
+    await this.setState({cart_count:newAppStore.cart_products.length})
     }
     
     render(){
        const{cart_count}=this.state
         const {cart_products}=newAppStore
+        // alert("account")
         return(
-            
+        
         <Tap.Navigator
             initialRouteName="Home_Screen"
-            activeColor="white"
+            activeColor="purple"
             shifting={true}
             labeled={true}
-            activeColor="#f0edf6"
+            // activeColor="#f0edf6"
         inactiveColor="#3e2465"
-            barStyle={{ backgroundColor: '#694fad' }}
+            // barStyle={{ backgroundColor: '#694fad' }}
             
         >
             <Tap.Screen
              name="Home_Screen" 
-            //  component={HomeScreen}
+            //  component={Content}
             // initialParams={this.cartList}
             children={props => (
-                <HomeScreen
+                <Content
                 cart_length={this.cartList}
                   {...props}
                 />
               )}
             
-             options={{
-                 
+             options={{ 
                  tabBarLabel:"Home",
-                 tabBarColor:"rgb(186, 28, 7)",//
+                 tabBarColor:"goldenrod",
                  tabBarIcon:({color})=>(
                   <Icon name="home-outline" color={color} size={25}/>
                  ),
@@ -83,13 +92,13 @@ class Account_page extends React.Component{
             
             <Tap.Screen 
             name="Profile"
-             component={Profile}
+             component={TopTab}
              options={{
-                tabBarLabel:"Profile",
-                 tabBarColor:"rgb(48, 112, 51)",//
+                tabBarLabel:"Community",
+                 tabBarColor:"goldenrod",//
                  tabBarIcon:({color})=>(
                     <View>
-<Icon name="key-outline" color={color} size={25}/>
+<Icon name="people-outline" color={color} size={25}/>
                     
                     </View>                    
                     
@@ -110,11 +119,11 @@ class Account_page extends React.Component{
             options={{
                 tabBarLabel:"Cart",
                 title:"cart",
-                tabBarColor:"#694fad",
+                tabBarColor:"goldenrod",
                 tabBarIcon:({color})=>(
                     <View>
                     <Icon name="cart-outline" color={color} size={25}/>
-                    <Text style={{position:"absolute",top:5,right:8,fontSize:8,color:"goldenrod"}}>{cart_count}</Text>
+                    <Text style={{position:"absolute",top:5,right:8,fontSize:8,color:"purple"}}>{cart_count}</Text>
                     </View>
                    ),
             }}
@@ -122,6 +131,7 @@ class Account_page extends React.Component{
             
             
         </Tap.Navigator>
+        
         )
     }
 }
